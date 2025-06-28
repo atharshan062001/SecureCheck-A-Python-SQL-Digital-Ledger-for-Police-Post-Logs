@@ -20,6 +20,7 @@ def create_sql_connection():
         return None
 
 
+# Function helps to fetch data from the sql DB
 def fetch_data(query):
     connection = create_sql_connection()
 
@@ -41,15 +42,19 @@ def fetch_data(query):
 
 st.set_page_config(page_title="Secure check Police Dashboard", layout='wide')
 
-st.title("Check Post Digital Ledger")
+st.title("👮‍♂️Check Post Digital Ledger")
 st.markdown("Real-Time monitoring and insigths")
 
-st.header("Check Post Logs")
+# Overview of Datasets
+
+st.header("📝Check Post Logs")
 query = "SELECT * FROM traffic_data"
 data = fetch_data(query)
 st.dataframe(data,use_container_width=True)
 
-st.title("Advance Insigths")
+# Advance Queries
+ 
+st.title("📈Advance Insigths")
 
 selected_query = st.selectbox("Select your query",[
     "Top 10 Drugs Related Vehicles",
@@ -104,13 +109,12 @@ if st.button("Search"):
     else:
         st.warning("No Results Found !")
 
+# Prediction of violation
+
 st.markdown("---")
-st.header("Custom Natural Language Filter")
+st.header("🔍Custom Natural Language Filter")
 
 st.markdown("Fill up the details to get the prediction based on existing data")
-
-
-st.header("Predict Outcome and Violation")
 
 with st.form("new_log_form"):
     stop_date = st.date_input("Stop Date")
@@ -141,21 +145,21 @@ with st.form("new_log_form"):
             (data["Drugs Related Stop"] == drug_related_stop)
         ]
 
-        print(f'{filtered_Date}')
-        print("Driver Age values:", data["Driver Age"].unique())
-        print("Driver Gender values:", type(data["Driver Gender"].unique()))
-        print("Search Conducted values:", data["Search Conducted"].unique())
-        print("Drugs Related Stop values:", data["Drugs Related Stop"].unique())
-        print("Stop Duration:", data["Stop Duration"].unique())
+        # print(f'{filtered_Date}')
+        # print("Driver Age values:", data["Driver Age"].unique())
+        # print("Driver Gender values:", type(data["Driver Gender"].unique()))
+        # print("Search Conducted values:", data["Search Conducted"].unique())
+        # print("Drugs Related Stop values:", data["Drugs Related Stop"].unique())
+        # print("Stop Duration:", data["Stop Duration"].unique())
 
-        print("Inputs =>")
-        print("driver_age:", driver_age)
-        print("driver_gender:", driver_gender)
-        print("search_conducted:", type (search_conducted))
-        print("drug_related_stop:", drug_related_stop)
-        print("Stop Outcome with mode + 0:", filtered_Date["Stop Outcome"].mode()[0])
-        print("Stop Outcome with mode only:", filtered_Date["Stop Outcome"].mode())
-        print("Stop Outcome without mode:", filtered_Date["Stop Outcome"])
+        # print("Inputs =>")
+        # print("driver_age:", driver_age)
+        # print("driver_gender:", driver_gender)
+        # print("search_conducted:", type (search_conducted))
+        # print("drug_related_stop:", drug_related_stop)
+        # print("Stop Outcome with mode + 0:", filtered_Date["Stop Outcome"].mode()[0])
+        # print("Stop Outcome with mode only:", filtered_Date["Stop Outcome"].mode())
+        # print("Stop Outcome without mode:", filtered_Date["Stop Outcome"])
 
 
         if not filtered_Date.empty:
@@ -174,18 +178,11 @@ with st.form("new_log_form"):
         st.markdown(f"""
         **PREDICTION SUMMARY**
         
-        -- **Predicted Violation** : {predicted_violation}
+        -- **🚨Predicted Violation** : {predicted_violation}
 
-        -- **Predicted Stop Outcome** : {predicted_outcome}
+        -- **⚠️Predicted Stop Outcome** : {predicted_outcome}
 
         🚗 A {driver_age}-year-old {driver_gender.lower()} driver {country_text} was stopped for {predicted_violation.lower()} at 2:30 PM.
         {search_text} and the stop {drug_text}.
         The stop lasted {stop_duration} {vehicle_text}.
 """)
-
-# clean the data for gender - done
-# violation or violation raw based on others value - done
-# age or age raw which should drop - done
-# Find and remove na or null values
-# Add more values in the forms - done
-# complete sql - done
