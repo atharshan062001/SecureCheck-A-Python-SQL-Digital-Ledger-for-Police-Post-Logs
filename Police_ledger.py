@@ -4,7 +4,7 @@ import psycopg2
 import psycopg2.extras
 import re
 
-
+# Function helps to establish connect with sql
 def create_sql_connection():
     try: 
         connection = psycopg2.connect(
